@@ -45,15 +45,27 @@ export type K1 = keyof Person; // "name" | "age" | "location"
 export type K2 = keyof Person[];  // "length" | "push" | "pop" | "concat" | ...
 export type K3 = keyof { [x: string]: Person };  // string
 
+type rep = keyof ['carlos', 'talavera'];
+
 function pluck<T, K extends keyof T>(o: T, names: K[]): T[K][] {
   return names.map(n => o[n]);
 }
 
 function getProperty<T, K extends keyof T>(o: T, name: K): T[K] {
+  console.log('-----------> ', name);
+
   return o[name]; // o[name] is of type T[K]
 }
 //#endregion
+function broken(name: string | null): string {
+  console.log('llamada a la funcion broken');
 
+  function postfix(epithet: string) {
+       return name!.charAt(0) + '.  the ' + epithet; // error, 'name' is possibly null
+  }
+  name = name || 'Bob';
+  return postfix(null);
+}
 
 @Component({
   selector: 'app-root',
@@ -79,6 +91,7 @@ export class AppComponent {
      const result2 = getProperty(this.persona, 'location');
     console.log(' Llamada a la funcion ', result1);
     console.log(' Llamada a la funcion ', result2);
+
   }
 
 
