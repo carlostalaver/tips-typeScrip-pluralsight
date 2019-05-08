@@ -4,7 +4,7 @@ import { Capability } from 'protractor';
 import { log } from 'util';
 import { IToDo, TodosService } from './demo/todos.service';
 
-//#region
+//#region esta en el block https://code.i-harness.com/es/docs/typescript/handbook/advanced-types
 export class BasicCalculator {
   public constructor(protected value: number = 0) {
     console.log('llamando a constructor principal ', value );
@@ -49,7 +49,7 @@ function pluck<T, K extends keyof T>(o: T, names: K[]): T[K][] {
   return names.map(n => o[n]);
 }
 
-function getProperty<T, K extends keyof T>(o: T, name: K): T[K]{
+function getProperty<T, K extends keyof T>(o: T, name: K): T[K] {
   return o[name]; // o[name] is of type T[K]
 }
 //#endregion
@@ -77,6 +77,7 @@ export class AppComponent {
   constructor(private todo: TodosService) {
      const result1 = pluck(this.persona, ['age', 'location']);
      const result2 = getProperty(this.persona, 'location');
+    console.log(' Llamada a la funcion ', result1);
     console.log(' Llamada a la funcion ', result2);
   }
 
