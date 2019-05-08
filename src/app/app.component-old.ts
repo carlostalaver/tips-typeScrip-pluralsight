@@ -4,6 +4,7 @@ import { Capability } from 'protractor';
 import { log } from 'util';
 import { IToDo, TodosService } from './demo/todos.service';
 import { ClaseDecorada } from './clasesDecorada';
+import { ManejandoPromesas } from './promesas/doWorkPromise';
 
 interface IBook {
   autor: string;
@@ -112,7 +113,7 @@ class ElectronicBook extends LibraryBook {
   }
 }
 
-const kidBook = new ChildrenBook();
+/* const kidBook = new ChildrenBook();
 kidBook.Checkin()
   .Clean()
   .Checkout();
@@ -120,7 +121,7 @@ kidBook.Checkin()
 const electronic = new ElectronicBook();
 electronic.Checkin()
   .RemoveFromCustomerDevice()
-  .Checkout();
+  .Checkout(); */
 
 //#endregion
 
@@ -138,8 +139,8 @@ function logVisitor(param: number | string) {
     console.log(`el paramentro ${param.toLocaleUpperCase()} es un string`);
   }
 }
-logVisitor(21);
-logVisitor('Cart');
+// logVisitor(21);
+// logVisitor('Cart');
 //#endregion
 
 //#region Creando y usando type guard personalizados
@@ -207,27 +208,31 @@ const objTest = new Test();
 export class AppComponent {
   title = 'miproyecto';
   private nameAgeMapping: Map<string, number> = new Map();
-  t4: IToDo[] = [];
+  t4: Partial<IToDo[]> = [];
 
   key: IterableIterator<string>;
 
   constructor(private todo: TodosService) {
-    // le puedo pasar un obj de tipo IToDo
-    // this.upDateToDo(this.td);
-
-    // o le puedo pasar un obj parcial de tipo IToDo
-    // this.upDateToDo(this.td2);
     this.nameAgeMapping.set('Lokesh', 37);
     this.nameAgeMapping.set('Raj', 35);
     this.nameAgeMapping.set('John', 40);
-    // this.recorrer();
-    this.t4.push(this.td)
-    //this.operadorTresPuntos(this.t4);
+
+
+    this.upDateToDo(this.td); // le puedo pasar un obj de tipo IToDo
+    this.upDatePartialToDo(this.td2); // o le puedo pasar un obj parcial de tipo IToDo
+    this.recorrer();
+    this.t4.push(this.td);
+
+    this.operadorTresPuntos(this.t4);
+
+    /* trabajando con decoradores, nota: la configuracion de los decoradores
+    se aplica inmediatamente al instanciar la clase */
     const decoradores = new ClaseDecorada(21, 'Carlos Talavera');
     console.log('----> llamando a la clase decorada con el sealed ');
-    // decoradores.assisFaculty();
+    // decoradores.assisFaculty(); esta llamada no es nacesaria para aplicar el decorador
 
-
+    /* trabajando con asyncronia - promesas- async await */
+     const miPromesa = new ManejandoPromesas();
   }
 
   td: IToDo = {
@@ -256,21 +261,23 @@ export class AppComponent {
     }
   };
 
-  upDateToDo(todo: Partial<IToDo>) {
+  upDateToDo(todo: IToDo) { // tengo que pasarle un obj  completo de tipo IToDo
+    this.todo.updateToDo(todo);
+  }
+  upDatePartialToDo(todo: Partial<IToDo>) { // puedo pasarle una parte del obj de tipo IToDo
     this.todo.updateToDo(todo);
   }
 
-  /*   recorrer(): void {
-      this.nameAgeMapping.forEach((a, b, c ) => {
-        console.log('el valor de a: ', a);
-        console.log('el valor de b: ', b);
-        console.log('el valor de c: ', c);
-      });
-    }
+  recorrer(): void {
+/*     this.nameAgeMapping.forEach((value, key, map) => {
+      console.log('value: ', value);
+      console.log('key: ', key);
+      console.log('map: ', map);
+    }); */
+  }
 
-    operadorTresPuntos(...t): void {
-      console.log(' el parametro t ', t);
-
-    } */
+  operadorTresPuntos(...t): void {
+    console.log(' el parametro t ', t);
+  }
 }
 
