@@ -45,8 +45,6 @@ export type K1 = keyof Person; // "name" | "age" | "location"
 export type K2 = keyof Person[];  // "length" | "push" | "pop" | "concat" | ...
 export type K3 = keyof { [x: string]: Person };  // string
 
-type rep = keyof ['carlos', 'talavera'];
-
 function pluck<T, K extends keyof T>(o: T, names: K[]): T[K][] {
   return names.map(n => o[n]);
 }
@@ -63,9 +61,27 @@ function broken(name: string | null): string {
   function postfix(epithet: string) {
        return name!.charAt(0) + '.  the ' + epithet; // error, 'name' is possibly null
   }
-  name = name || 'Bob';
+  name = name || 'Bob'; // <----------- Oido al tambor en el uso del OR logico ||
   return postfix(null);
 }
+
+//#region usando restrcciones genericas Notas en la hoja 87 de la libreta
+  interface Lengthwise {
+    length: number;
+    miproTest: string;
+  }
+
+  function loggingIdentity<T extends Lengthwise>(arg: T): T {
+    console.log(arg.length);  // Now we know it has a .length property, so no more error
+    return arg;
+  }
+
+  loggingIdentity({'length': 21, miproTest: 'esta es mi propiedad de prueba'});
+
+  type Partial<T> = {
+    [P in keyof T]?: T[P];
+  }
+//#endregion
 
 @Component({
   selector: 'app-root',
