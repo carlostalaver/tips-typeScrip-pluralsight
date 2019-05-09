@@ -7,8 +7,8 @@ import { IToDo, TodosService } from './demo/todos.service';
 //#region esta en el block https://code.i-harness.com/es/docs/typescript/handbook/advanced-types
 export class BasicCalculator {
   public constructor(protected value: number = 0) {
-    console.log('llamando a constructor principal ', value );
-   }
+    console.log('llamando a constructor principal ', value);
+  }
   public currentValue(): number {
     return this.value;
   }
@@ -24,7 +24,7 @@ export class BasicCalculator {
 
 class ScientificCalculator extends BasicCalculator {
   public constructor(value = 21) {
-     super(value);
+    super(value);
   }
   public sin() {
     this.value = Math.sin(this.value);
@@ -59,28 +59,28 @@ function broken(name: string | null): string {
   console.log('llamada a la funcion broken');
 
   function postfix(epithet: string) {
-       return name!.charAt(0) + '.  the ' + epithet; // error, 'name' is possibly null
+    return name!.charAt(0) + '.  the ' + epithet; // error, 'name' is possibly null
   }
   name = name || 'Bob'; // <----------- Oido al tambor en el uso del OR logico ||
   return postfix(null);
 }
 
 //#region usando restrcciones genericas Notas en la hoja 87 de la libreta
-  interface Lengthwise {
-    length: number;
-    miproTest: string;
-  }
+interface Lengthwise {
+  length: number;
+  miproTest: string;
+}
 
-  function loggingIdentity<T extends Lengthwise>(arg: T): T {
-    console.log(arg.length);  // Now we know it has a .length property, so no more error
-    return arg;
-  }
+function loggingIdentity<T extends Lengthwise>(arg: T): T {
+  console.log(arg.length);  // Now we know it has a .length property, so no more error
+  return arg;
+}
 
-  loggingIdentity({'length': 21, miproTest: 'esta es mi propiedad de prueba'});
+loggingIdentity({ 'length': 21, miproTest: 'esta es mi propiedad de prueba' });
 
-  type Partial<T> = {
-    [P in keyof T]?: T[P];
-  }
+type Partial<T> = {
+  [P in keyof T]?: T[P];
+}
 //#endregion
 
 @Component({
@@ -90,21 +90,21 @@ function broken(name: string | null): string {
 })
 export class AppComponent {
 
-   private you: K1 = 'sexo';
+  private you: K1 = 'sexo';
 
   persona: Person = {
     age: 21,
     location: {
       address: 'San Martín',
       city: 'Chile'
-    } ,
+    },
     name: 'Carlos',
     sexo: true
   };
 
   constructor(private todo: TodosService) {
-     const result1 = pluck(this.persona, ['age', 'location']);
-     const result2 = getProperty(this.persona, 'location');
+    const result1 = pluck(this.persona, ['age', 'location']);
+    const result2 = getProperty(this.persona, 'location');
     console.log(' Llamada a la funcion ', result1);
     console.log(' Llamada a la funcion ', result2);
 
