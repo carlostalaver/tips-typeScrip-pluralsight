@@ -60,6 +60,10 @@ function miFuncion(arg: IBook | IMagazine): void {
   console.log(arg);
 }
 
+function miFuncionDesestructurando( {anno, autor, direccion} = inter): void {
+  console.log(`*********************************Sel año es ${anno} el autor ${autor} y direccion ${direccion} `);
+}
+
 interface Icart<K, V> {
   propiedad1: K;
   propiedad2: V;
